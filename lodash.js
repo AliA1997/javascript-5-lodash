@@ -10,10 +10,43 @@
   variable.
 */
 
+let people = [
+  {
+    first_name: 'Shihana', 
+    last_name: 'Abu Lebdeh',
+    age: 19
+  },
+  {
+    first_name: 'Ali',
+    last_name: 'Alhaddad',
+    age: 20
+  },
+  {
+    first_name: 'Khalil',
+    last_name: 'Abu Lebdeh',
+    age: 18
+  },
+  {
+    first_name: 'Mohamad', 
+    last_name: 'Alhaddad',
+    age: 17
+  },
+  {
+    first_name: 'Lebron',
+    last_name: 'James',
+    age: 33
+  },
+  {
+    first_name: 'Chris',
+    last_name: 'Paul',
+    age: 33
+  }
+];
 // map, with a property
 //  Map lets us take an array of objects, and a string referencing a common property,
 //  and create an array that consists of that property from each object.
 
+const names = _.map(people, 'first_name'); 
 // const myObjectArray [{name:'bob',age:13,height:'6ft'},{name:'bobs',age:17,height:'6ft'},
 //    {name:'bobett',age:14,height:'6ft'},{name:'bobbin',age:18,height:'6ft'},
 //    {name:'bobbers',age:15,height:'6ft'},{name:'bob the 2nd',age:19,height:'6ft'},
@@ -282,11 +315,11 @@ const myEmployees = [
   }
 ];
 
-const myEmployeesAddresses = 0; // use map to get addresses here.
+const myEmployeesAddresses = _.map(myEmployees, 'address'); // use map to get addresses here.
 
 // Now we want to use map to get an array of ages of the employees.
 
-const myEmployeesAges = 0; // use map to get ages here.
+const myEmployeesAges = _.map(myEmployees, 'age'); // use map to get ages here.
 
 // union
 //  Union lets us take 2 arrays, and create a new array that only has 1 entry for
@@ -326,7 +359,7 @@ const breeFriendsEmails = [
   "dave@gmail.com"
 ];
 
-const listToSendEmailsTo = 0; // Put lodash here to make list of the union of the two address.
+const listToSendEmailsTo = _.union(bobFriendsEmails, breeFriendsEmails); // Put lodash here to make list of the union of the two address.
 
 // intersection
 //  Intersection lets us take two arrays, and create a new array that only
@@ -339,7 +372,7 @@ const listToSendEmailsTo = 0; // Put lodash here to make list of the union of th
 // Bob and Bree have decided that instead of inviting everyone they know to their
 // party. They are instead only going to invite those people that they both know.
 
-const listOfSharedEmails = 0; // Use lodash to create the list that are in both lists
+const listOfSharedEmails = _.intersection(bobFriendsEmails, breeFriendsEmails); // Use lodash to create the list that are in both lists
 
 // groupBy
 //  Group By lets us take an array of objects, and group then into groups based
@@ -403,10 +436,10 @@ const purchases = [
   { month: "February", price: 23.65 }
 ];
 
-const purchasesByMonth = 0; // Use groupBy to group the purchases by the month that they were made.
+const purchasesByMonth = _.groupBy(purchases, 'month'); // Use groupBy to group the purchases by the month that they were made.
 
 // Bonus Points
-const totalByMonth = 0; // Use the grouped purchasesByMonth and reduce to create a totalByMonth object.
+const totalByMonth = _.groupBy(purchases, 'month').reduce((t, e) => t += e); // Use the grouped purchasesByMonth and reduce to create a totalByMonth object.
 
 // memoize
 //  Memoize lets us take a function that takes a lot of time to run, and cache (or memoize)
@@ -473,7 +506,7 @@ let getDeathstar = function(n) {
 
 // getPersonApi `https://swapi.co/api/people/${n}`
 
-let getJedi = // Use Memoize to remember the previous calls made to the server
+let getJedi = _.memoize(getDeathstar);// Use Memoize to remember the previous calls made to the server
   // then compare the times for the first and second calls of both the getJedi and
   // getDeathstar functions
   // There are no unit tests for this section. But play around with the
@@ -488,14 +521,14 @@ let getJedi = // Use Memoize to remember the previous calls made to the server
   // });
 
   setTimeout(() => {
-    // console.time('getDeathstar')
-    // getDeathstar(9).then(e=>{
-    //   console.log(e.data)
-    //   console.timeEnd('getDeathstar')
-    // });
-    // console.time('getJedi')
-    // getJedi(1).then(e=>{
-    //   console.log(e.data)
-    //   console.timeEnd('getJedi')
-    // });
+    console.time('getDeathstar')
+    getDeathstar(9).then(e=>{
+      console.log(e.data)
+      console.timeEnd('getDeathstar')
+    });
+    console.time('getJedi')
+    getJedi(1).then(e=>{
+      console.log(e.data)
+      console.timeEnd('getJedi')
+    });
   }, 2000);
